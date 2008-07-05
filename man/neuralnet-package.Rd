@@ -11,8 +11,8 @@ Training of neural networks using the Resilient Backpropagation with (Riedmiller
 \tabular{ll}{
 Package: \tab neuralnet\cr
 Type: \tab Package\cr
-Version: \tab 1.0\cr
-Date: \tab 2008-02-26\cr
+Version: \tab 1.1\cr
+Date: \tab 2008-05-07\cr
 License: \tab GPL (>=2)
 }
 

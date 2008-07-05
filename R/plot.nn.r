@@ -39,7 +39,7 @@ function (x, rep = NULL, x.entry = NULL, x.out = NULL, radius = 0.15,
             x.out <- 0.5 + (arrow.length/2) * length(weights)
         width <- max(x.out - x.entry + 0.2, 0.8) * 8
         radius <- radius/dimension
-        get(getOption("device"))()
+        dev.new()
         entry.label <- net$model.list$variables
         out.label <- net$model.list$response
         neuron.count <- array(0, length(weights) + 1)
