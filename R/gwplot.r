@@ -4,7 +4,7 @@ function (x, rep = NULL, max = NULL, min = NULL, file = NULL,
     type = "p", col = "black", ...) 
 {
     net <- x
-    if (is.null(net$gw)) 
+    if (is.null(net$generalized.weights)) 
         stop("generalized weights were not calculated", call. = F)
     if (!is.null(file)) {
         if (!is.character(file)) 
@@ -30,7 +30,7 @@ function (x, rep = NULL, max = NULL, min = NULL, file = NULL,
         if (rep == "best") 
             rep <- as.integer(which.min(net$result.matrix["error", 
                 ]))
-        if (length(net$gw) < rep) 
+        if (length(net$generalized.weights) < rep) 
             stop("'rep' does not exist")
     }
     covariate <- as.vector(net$covariate[, selected.covariate])
@@ -38,14 +38,15 @@ function (x, rep = NULL, max = NULL, min = NULL, file = NULL,
     column <- (selected.response - 1) * ncol(net$covariate) + 
         selected.covariate
     if (is.null(rep)) {
-        matrix <- as.matrix(sapply(net$gw, function(x) rbind(x[, 
+        matrix <- as.matrix(sapply(net$generalized.weights, function(x) rbind(x[, 
             column])))
         item.to.print <- min(which.min(net$result.matrix["error", 
             ]))
     }
     else {
         highlight = F
-        matrix <- as.matrix(net$gw[[rep]][, column])
+        matrix <- as.matrix(net$generalized.weights[[rep]][, 
+            column])
         item.to.print <- 1
     }
     if (is.null(max)) 

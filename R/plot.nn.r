@@ -17,6 +17,7 @@ function (x, rep = NULL, x.entry = NULL, x.out = NULL, radius = 0.15,
             if (!is.null(file)) 
                 file.rep <- paste(file, ".", i, sep = "")
             else file.rep <- NULL
+            dev.new()
             plot.nn(net, rep = i, x.entry, x.out, radius, arrow.length, 
                 intercept, intercept.factor, information, information.pos, 
                 col.entry.synapse, col.entry, col.hidden, col.hidden.synapse, 
@@ -39,7 +40,6 @@ function (x, rep = NULL, x.entry = NULL, x.out = NULL, radius = 0.15,
             x.out <- 0.5 + (arrow.length/2) * length(weights)
         width <- max(x.out - x.entry + 0.2, 0.8) * 8
         radius <- radius/dimension
-        dev.new()
         entry.label <- net$model.list$variables
         out.label <- net$model.list$response
         neuron.count <- array(0, length(weights) + 1)
@@ -173,8 +173,7 @@ function (x, rep = NULL, x.entry = NULL, x.out = NULL, radius = 0.15,
         if (information) 
             grid.text(paste("Error: ", round(result.matrix[rep, 
                 "error"], 6), "   Steps: ", result.matrix[rep, 
-                "steps"], "   Threshold: ", result.matrix[rep, 
-                "threshold"], sep = ""), x = 0.5, y = information.pos, 
+                "steps"], sep = ""), x = 0.5, y = information.pos, 
                 just = "bottom", gp = gpar(fontsize = fontsize + 
                   2, ...))
         popViewport()

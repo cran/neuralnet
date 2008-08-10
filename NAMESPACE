@@ -1,3 +1,3 @@
-export(neuralnet, gwplot, plot.nn, print.nn, compute)
+export(neuralnet, gwplot, plot.nn, print.nn, compute, confidence.interval, prediction)
 S3method(plot, nn) 
 S3method(print, nn)

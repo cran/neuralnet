@@ -2,8 +2,14 @@
 function (x, covariate, rep = 1) 
 {
     nn <- x
-    weights <- nn$weights[[rep]]
     linear.output <- nn$linear.output
+    weights <- nn$weights[[rep]]
+    nrow.weights <- sapply(weights, nrow)
+    ncol.weights <- sapply(weights, ncol)
+    weights <- unlist(weights)
+    if (any(is.na(weights))) 
+        weights[is.na(weights)] <- 0
+    weights <- relist(weights, nrow.weights, ncol.weights)
     length.weights <- length(weights)
     covariate <- as.matrix(cbind(1, covariate))
     act.fct <- nn$act.fct

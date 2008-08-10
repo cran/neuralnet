@@ -11,8 +11,8 @@ Training of neural networks using the Resilient Backpropagation with (Riedmiller
 \tabular{ll}{
 Package: \tab neuralnet\cr
 Type: \tab Package\cr
-Version: \tab 1.1\cr
-Date: \tab 2008-05-07\cr
+Version: \tab 1.2\cr
+Date: \tab 2008-08-10\cr
 License: \tab GPL (>=2)
 }
 
@@ -49,22 +49,22 @@ Maintainer: Frauke Guenther \email{guenther@bips.uni-bremen.de}
   under grant scheme PI 345/3-1.
 }
 \keyword{ neural }
-\seealso{\code{\link{plot.nn}} for plotting of the neural network.
+\seealso{
+ \code{\link{plot.nn}} for plotting of the neural network.
 
  \code{\link{gwplot}} for plotting of the generalized weights.
 
  \code{\link{compute}} for computation of the calculated network.
+
+ \code{\link{confidence.interval}} for calculation of a confidence interval for the weights.
+
+ \code{\link{prediction}} for calculation of a prediction.
 }
 \examples{
 AND <- c(rep(0,7),1)
 OR <- c(0,rep(1,7))
-SUM <- c(0,1,1,2,1,2,2,3)
-binary.data <- data.frame(expand.grid(c(0,1), c(0,1), c(0,1)), AND, OR, SUM)
-print(net <- neuralnet( AND+OR~Var1+Var2+Var3,  binary.data, hidden=0, rep=10,
-	     err.fct="ce", linear.output=FALSE))
-print(net.sum <- neuralnet( SUM~Var1+Var2+Var3,  binary.data, hidden=0, 
-		 linear.output=TRUE))
-net.sum$predictions
+binary.data <- data.frame(expand.grid(c(0,1), c(0,1), c(0,1)), AND, OR)
+print(net <- neuralnet( AND+OR~Var1+Var2+Var3,  binary.data, hidden=0, rep=10, err.fct="ce", linear.output=FALSE))
 
 XOR <- c(0,1,1,0)
 xor.data <- data.frame(expand.grid(c(0,1), c(0,1)), XOR)
@@ -72,14 +72,22 @@ print(net.xor <- neuralnet( XOR~Var1+Var2, xor.data, hidden=2, rep=5))
 plot(net.xor, rep="best")
 
 data(infert, package="datasets")
-print(net.infert <- neuralnet( case~parity+induced+spontaneous,  infert, 
-		    err.fct="ce", linear.output=FALSE, family=binomial()))
+print(net.infert <- neuralnet( case~parity+induced+spontaneous,  infert, err.fct="ce", linear.output=FALSE, likelihood=TRUE))
 gwplot(net.infert, selected.covariate="parity")
 gwplot(net.infert, selected.covariate="induced")
 gwplot(net.infert, selected.covariate="spontaneous")
+confidence.interval(net.infert)
 
 Var1 <- runif(50, 0, 100) 
 sqrt.data <- data.frame(Var1, Sqrt=sqrt(Var1))
 print(net.sqrt <- neuralnet( Sqrt~Var1,  sqrt.data, hidden=10, threshold=0.01))
 compute(net.sqrt, (1:10)^2)$net.result
+
+Var1 <- rpois(100,0.5)
+Var2 <- rbinom(100,2,0.6)
+Var3 <- rbinom(100,1,0.5)
+SUM <- as.integer(abs(Var1+Var2+Var3+(rnorm(100))))
+sum.data <- data.frame(Var1+Var2+Var3, SUM)
+print(net.sum <- neuralnet( SUM~Var1+Var2+Var3,  sum.data, hidden=1, act.fct="tanh"))
+prediction(net.sum)
 }

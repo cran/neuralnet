@@ -12,26 +12,18 @@
     implemented.
 }
 \details{
-If family is stated, a glm model will additionally be calculated for comparison reasons, but only if the response consists of only one parameter.
 The globally convergent algorithm is based on the Resilient Backpropagation without weightbacktracking and additionally modifies one learning rate, either the learningrate associated with the smallest absolute gradient (sag) or the smallest learningrate (slr) itself. The learning rates in the grprop algorithm are limited to the boundaries defined in learningrate.limit. 
 }
 \usage{
-neuralnet(formula, data, hidden = 1, threshold = c(0.001),
-    stepmax = 1e+05, rep = 1, weights.mean = 0, weights.variance = 1,
-    startweights = NULL, learningrate.limit = NULL, 
-    learningrate.factor = list(minus = 0.5, plus = 1.2), lifesign = "none",
-    lifesign.step = 1000, algorithm = "rprop+", err.fct = "sse", 
-    act.fct = "logistic", linear.output=TRUE, family = NULL)
+neuralnet(formula, data, hidden = 1, threshold = 0.01, stepmax = 1e+05, rep = 1, startweights = NULL, learningrate.limit = NULL, learningrate.factor = list(minus = 0.5, plus = 1.2), lifesign = "none", lifesign.step = 1000, algorithm = "rprop+", err.fct = "sse", act.fct = "logistic", linear.output = TRUE, exclude = NULL, constant.weights = NULL, likelihood = FALSE)
 }
 \arguments{
   \item{formula}{ a symbolic description of the model to be fitted. }
   \item{data}{ a data frame in which the variables specified in \code{formula} will be found.  }
   \item{hidden}{ a vector of integers specifying the number of hidden neurons (vertices) in each layer. }
-  \item{threshold}{ a vector of integers for the threshold of the minimal error. Threshold as a vector of size n, trains n different repetitions of the neural network with a component wise threshold.  }
+  \item{threshold}{ a vector of integers for the threshold of the minimal error.  }
   \item{stepmax}{ the maximum steps for the training of the neural network. Reaching this maximum leads to a stop of the neural network's training process. }
   \item{rep}{ the number of repetitions for the neural network's training for every threshold. }
-  \item{weights.mean}{ the mean of the normal distribution, the initial weights are drawn from. }
-  \item{weights.variance}{ the variance of the normal distribution, the initial weights are drawn from. }
   \item{startweights}{ a vector containing starting values for the weights. The weights will not be randomly initialized.}
   \item{learningrate.limit}{ a vector or a list containing the lowest and highest limit for the learning rate. }
   \item{learningrate.factor}{ a vector or a list containing the multiplication factors for the upper and lower learning rate. }
@@ -42,7 +34,9 @@ neuralnet(formula, data, hidden = 1, threshold = c(0.001),
   \item{err.fct}{ a differentiable function that is used for the calculation of the error. Alternatively, the strings 'sse' and 'ce' which stand for the sum of squared errors and the cross-entropy can be used.}
   \item{act.fct}{ a differentiable function that is used for smoothing the result of the cross product of the covariate or neurons and the weights. Additionally the strings, 'logistic' and 'tanh' are possible for the logistic function and tangent hyperbolicus. }
   \item{linear.output}{ logical. If act.fct should not be applied to the output neurons set linear output to TRUE, otherwise to FALSE. }
-  \item{family}{ a description of the error distribution and link function to be used only in the glm model. This can be a character string naming a family function, a family function or the result of a call to a family function.}
+  \item{exclude}{ a vector or a matrix specifying the weights, that are excluded from the calculation. If given as a vector, the exact positions of the weights must be known. A matrix with n-rows and 3 columns will exclude n weights, where the first column stands for the layer, the second column for the input neuron and the third column for the output neuron of the weight.  }
+  \item{constant.weights}{ a vector specifying the values of the weights that are excluded from the training process and treated as fix. }
+  \item{likelihood}{ logical. If the error function is equal to the negative log-likelihood function, the information criteria AIC and BIC will be calculated. Furthermore the usage of confidence.interval is meaningfull. }
 }
 \value{
   \code{neuralnet} returns an object of class \code{nn}.
@@ -57,11 +51,9 @@ neuralnet(formula, data, hidden = 1, threshold = c(0.001),
   \item{ data }{ the \code{data argument}.}
   \item{ net.result }{ a list containing the overall result of the neural network for every repetition.}
   \item{ weights }{ a list containing the fitted weights of the neural network for every repetition. }
-  \item{ gw }{ a list containing the generalized weights of the neural network for every repetition. }
-  \item{ result.matrix }{ a matrix containing the threshold, reached threshold, steps, error, aic (if computed) and weights for every repetition. Each column represents one repetition. }
-  \item{ list.glm }{ a list of glm objects. It will be set to NULL if there is more than one response or family is not stated.}
-  \item{ predictions }{ a list of the predictions of the repetitions, the data and the glm models. It will not be computed if at least one of the covariates has more than 50 factors.}
-  \item{ data.error }{ the error of the data. This is 0, if no row in covariate has a duplicate. It will not be computed if at least one of the covariates has more than 50 factors.}
+  \item{ generalized.weights }{ a list containing the generalized weights of the neural network for every repetition. }
+  \item{ result.matrix }{ a matrix containing the threshold, reached threshold, steps, error, AIC and BIC (if computed) and weights for every repetition. Each column represents one repetition. }
+  \item{ startweights }{ a list containing the startweights of the neural network for every repetition. }
 }
 \references{ 
     Riedmiller M. (1994) 
@@ -84,23 +76,24 @@ neuralnet(formula, data, hidden = 1, threshold = c(0.001),
 }
 \author{ Stefan Fritsch \email{fritsch@bips.uni-bremen.de} }
 
-\seealso{\code{\link{plot.nn}} for plotting of the neural network.
+\seealso{
+ \code{\link{plot.nn}} for plotting of the neural network.
+
  \code{\link{gwplot}} for plotting of the generalized weights.
- \code{\link{compute}} for computation of the calculated network.
+
+ \code{\link{compute}} for computation of a given neural network for a new covariate vector.
+
+ \code{\link{confidence.interval}} for calculation of confidence intervals of the weights.
+
+ \code{\link{prediction}} for a summary of the output of the neural networks.
 }
 \examples{
 AND <- c(rep(0,7),1)
 OR <- c(0,rep(1,7))
-SUM <- c(0,1,1,2,1,2,2,3)
-binary.data <- data.frame(expand.grid(c(0,1), c(0,1), c(0,1)), AND, OR, SUM)
-print(net <- neuralnet( AND+OR~Var1+Var2+Var3,  binary.data, hidden=0, rep=10,
-	     err.fct="ce", linear.output=FALSE))
-print(net.sum <- neuralnet( SUM~Var1+Var2+Var3,  binary.data, hidden=0, 
-		 linear.output=TRUE))
-net.sum$predictions
+binary.data <- data.frame(expand.grid(c(0,1), c(0,1), c(0,1)), AND, OR)
+print(net <- neuralnet( AND+OR~Var1+Var2+Var3,  binary.data, hidden=0, rep=10, err.fct="ce", linear.output=FALSE))
 
 data(infert, package="datasets")
-print(net.infert <- neuralnet( case~parity+induced+spontaneous,  infert, 
-		    err.fct="ce", linear.output=FALSE, family=binomial()))
+print(net.infert <- neuralnet( case~parity+induced+spontaneous,  infert, err.fct="ce", linear.output=FALSE, likelihood=TRUE))
 }
 \keyword{ neural }

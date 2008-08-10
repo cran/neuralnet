@@ -1,17 +1,17 @@
 \name{compute}
 \alias{compute}
-\title{ Computation of a specific covariate given a trained neural network }
+\title{ Computation of a given neural network for a new covariate vector}
 \description{
  \code{compute}, a method for objects of class \code{nn}, typically
   produced by \code{neuralnet}. 
-Computes the neuron's output for a specific arbitrary covariate given a trained neural network. Please make sure that the order of the covariates is the same in the new matrix or dataframe as in the original neural network.
+Computes the outputs of all neurons for a specific arbitrary covariate vector given a trained neural network. Please make sure that the order of the covariates is the same in the new matrix or dataframe as in the original neural network.
 }
 \usage{
 compute(x, covariate, rep = 1)
 }
 \arguments{
   \item{x}{ an object of class \code{nn}. }
-  \item{covariate}{ a data.frame or matrix containing the variables to calculate the neural network. }
+  \item{covariate}{ a data.frame or matrix containing the variables to calculate the output of the neural network. }
   \item{rep}{ an integer indicating the neural network's repetition which should be used. }
 }
 
