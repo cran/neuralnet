@@ -1,4 +1,4 @@
-`plot.nn` <-
+plot.nn <-
 function (x, rep = NULL, x.entry = NULL, x.out = NULL, radius = 0.15, 
     arrow.length = 0.2, intercept = TRUE, intercept.factor = 0.4, 
     information = TRUE, information.pos = 0.1, col.entry.synapse = "black", 
@@ -183,7 +183,7 @@ function (x, rep = NULL, x.entry = NULL, x.out = NULL, radius = 0.15,
         }
     }
 }
-`calculate.delta` <-
+calculate.delta <-
 function (x, y, r) 
 {
     delta.x <- x[2] - x[1]
@@ -196,7 +196,7 @@ function (x, y, r)
     else y.null <- 0
     c(x.null, y.null)
 }
-`draw.text` <-
+draw.text <-
 function (label, x, y, xy.null = c(0, 0), color, alignment = c("left", 
     "bottom"), ...) 
 {

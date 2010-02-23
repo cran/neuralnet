@@ -21,7 +21,7 @@ prediction(x, list.glm = NULL)
 \value{
   a list of the summaries of the repetitions of the neural networks, the data and the glm objects (if available).
 }
-\author{ Stefan Fritsch \email{fritsch@bips.uni-bremen.de} }
+\author{ Stefan Fritsch, Frauke Guenther \email{guenther@bips.uni-bremen.de} }
 \seealso{\code{\link{neuralnet}}}
 \examples{
 Var1 <- rpois(100,0.5)

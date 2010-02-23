@@ -4,7 +4,7 @@
 \description{
     \code{confidence.interval}, a method for objects of class \code{nn}, typically produced by \code{neuralnet}.  Calculates confidence intervals of the weights (White, 1989)
     and the network information criteria NIC (Murata et al. 1994). All confidence intervals are calculated under the assumption of  a local identification of the given neural network.
-    If this assumption is violated, the results will not be reasonable. Please make also sure that the chosen err.fct equals the negative log-likelihood function,
+    If this assumption is violated, the results will not be reasonable. Please make also sure that the chosen error function equals the negative log-likelihood function,
     otherwise the results are not meaningfull, too.
 }
 \usage{
@@ -32,7 +32,7 @@ the number of hidden units for an artificial neural network model.}
     IEEE Transactions on Neural Networks 5 (6), pages 865-871
 }
 
-\author{ Stefan Fritsch \email{fritsch@bips.uni-bremen.de} }
+\author{ Stefan Fritsch, Frauke Guenther \email{guenther@bips.uni-bremen.de} }
 \seealso{\code{\link{neuralnet}}}
 \examples{
     data(infert, package="datasets")

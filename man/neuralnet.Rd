@@ -3,33 +3,34 @@
 \alias{print.nn}
 \title{Training of neural networks}
 \description{
-    \code{neuralnet} is used to train neural networks using the Resilient Backpropagation with (Riedmiller, 1994) or without 
-    weightbacktracking (Riedmiller and Braun, 1993) or the modified
-    globally convergent version by Anastasiadis et al. (2005). The
-    function allows flexible settings through custom-choice of error-
-    and activation-function. Furthermore the calculation of 
+    \code{neuralnet} is used to train neural networks using backpropagation, resilient backpropagation (RPROP) with (Riedmiller, 1994) or without 
+    weight backtracking (Riedmiller and Braun, 1993) or the modified
+    globally convergent version (GRPROP) by Anastasiadis et al. (2005). The
+    function allows flexible settings through custom-choice of error
+    and activation function. Furthermore the calculation of 
     generalized weights (Intrator O. and Intrator N., 1993) is
     implemented.
 }
 \details{
-The globally convergent algorithm is based on the Resilient Backpropagation without weightbacktracking and additionally modifies one learning rate, either the learningrate associated with the smallest absolute gradient (sag) or the smallest learningrate (slr) itself. The learning rates in the grprop algorithm are limited to the boundaries defined in learningrate.limit. 
+The globally convergent algorithm is based on the resilient backpropagation without weight backtracking and additionally modifies one learning rate, either the learningrate associated with the smallest absolute gradient (sag) or the smallest learningrate (slr) itself. The learning rates in the grprop algorithm are limited to the boundaries defined in learningrate.limit. 
 }
 \usage{
-neuralnet(formula, data, hidden = 1, threshold = 0.01, stepmax = 1e+05, rep = 1, startweights = NULL, learningrate.limit = NULL, learningrate.factor = list(minus = 0.5, plus = 1.2), lifesign = "none", lifesign.step = 1000, algorithm = "rprop+", err.fct = "sse", act.fct = "logistic", linear.output = TRUE, exclude = NULL, constant.weights = NULL, likelihood = FALSE)
+neuralnet(formula, data, hidden = 1, threshold = 0.01, stepmax = 1e+05, rep = 1, startweights = NULL, learningrate.limit = NULL, learningrate.factor = list(minus = 0.5, plus = 1.2), learningrate=NULL, lifesign = "none", lifesign.step = 1000, algorithm = "rprop+", err.fct = "sse", act.fct = "logistic", linear.output = TRUE, exclude = NULL, constant.weights = NULL, likelihood = FALSE)
 }
 \arguments{
   \item{formula}{ a symbolic description of the model to be fitted. }
-  \item{data}{ a data frame in which the variables specified in \code{formula} will be found.  }
+  \item{data}{ a data frame containing the variables specified in \code{formula}.  }
   \item{hidden}{ a vector of integers specifying the number of hidden neurons (vertices) in each layer. }
-  \item{threshold}{ a vector of integers for the threshold of the minimal error.  }
+  \item{threshold}{ an integer specifying the threshold for the partial derivatives of the error function as stopping criteria.  }
   \item{stepmax}{ the maximum steps for the training of the neural network. Reaching this maximum leads to a stop of the neural network's training process. }
-  \item{rep}{ the number of repetitions for the neural network's training for every threshold. }
+  \item{rep}{ the number of repetitions for the neural network's training. }
   \item{startweights}{ a vector containing starting values for the weights. The weights will not be randomly initialized.}
-  \item{learningrate.limit}{ a vector or a list containing the lowest and highest limit for the learning rate. }
-  \item{learningrate.factor}{ a vector or a list containing the multiplication factors for the upper and lower learning rate. }
+  \item{learningrate.limit}{ a vector or a list containing the lowest and highest limit for the learning rate. Used only for RPROP and GRPROP. }
+  \item{learningrate.factor}{ a vector or a list containing the multiplication factors for the upper and lower learning rate. Used only for RPROP and GRPROP. }
+  \item{learningrate}{ an integer specifying the learning rate used by traditional backpropagation. Used only for traditional backpropagation. }
   \item{lifesign}{ a string specifying how much the function will print during the calculation of the neural network. 'none', 'minimal' or 'full'. }
   \item{lifesign.step}{ an integer specifying the stepsize to print the minimal threshold in full lifesign mode.  }
-  \item{algorithm}{ a string containing the algorithm type to calculate the neural network. The  following types are possible: 'rprop+', 'rprop-', 'sag', or 'slr'. 'rprop+' and 'rprop-' refer to  the Resilient Backpropagation with and without weightbacktracking,
+  \item{algorithm}{ a string containing the algorithm type to calculate the neural network. The  following types are possible: 'backpropb', 'rprop+', 'rprop-', 'sag', or 'slr'. 'backprop' refers to backpropagation, 'rprop+' and 'rprop-' refer to  the resilient backpropagation with and without weight backtracking,
  while 'sag' and 'slr' induce the usage of the modified globally convergent algorithm (grprop). See Details for more information.}
   \item{err.fct}{ a differentiable function that is used for the calculation of the error. Alternatively, the strings 'sse' and 'ce' which stand for the sum of squared errors and the cross-entropy can be used.}
   \item{act.fct}{ a differentiable function that is used for smoothing the result of the cross product of the covariate or neurons and the weights. Additionally the strings, 'logistic' and 'tanh' are possible for the logistic function and tangent hyperbolicus. }
@@ -52,7 +53,7 @@ neuralnet(formula, data, hidden = 1, threshold = 0.01, stepmax = 1e+05, rep = 1,
   \item{ net.result }{ a list containing the overall result of the neural network for every repetition.}
   \item{ weights }{ a list containing the fitted weights of the neural network for every repetition. }
   \item{ generalized.weights }{ a list containing the generalized weights of the neural network for every repetition. }
-  \item{ result.matrix }{ a matrix containing the threshold, reached threshold, steps, error, AIC and BIC (if computed) and weights for every repetition. Each column represents one repetition. }
+  \item{ result.matrix }{ a matrix containing the reached threshold, needed steps, error, AIC and BIC (if computed) and weights for every repetition. Each column represents one repetition. }
   \item{ startweights }{ a list containing the startweights of the neural network for every repetition. }
 }
 \references{ 
@@ -74,18 +75,18 @@ neuralnet(formula, data, hidden = 1, threshold = 0.01, stepmax = 1e+05, rep = 1,
     Proceedings of the Statistical Computing Section, 244-249 
     San Francisco: American Statistical Society (eds). 
 }
-\author{ Stefan Fritsch \email{fritsch@bips.uni-bremen.de} }
+\author{ Stefan Fritsch, Frauke Guenther \email{guenther@bips.uni-bremen.de} }
 
 \seealso{
- \code{\link{plot.nn}} for plotting of the neural network.
+ \code{\link{plot.nn}} for plotting the neural network.
 
- \code{\link{gwplot}} for plotting of the generalized weights.
+ \code{\link{gwplot}} for plotting the generalized weights.
 
- \code{\link{compute}} for computation of a given neural network for a new covariate vector.
+ \code{\link{compute}} for computation of a given neural network for given covariate vectors.
 
  \code{\link{confidence.interval}} for calculation of confidence intervals of the weights.
 
- \code{\link{prediction}} for a summary of the output of the neural networks.
+ \code{\link{prediction}} for a summary of the output of the neural network.
 }
 \examples{
 AND <- c(rep(0,7),1)

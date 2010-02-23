@@ -19,14 +19,14 @@
 }
 \arguments{
   \item{x}{ an object of class \code{nn} }
-  \item{rep}{ repetition of the neural net. If rep="best", the repetition with the smallest error will be plotted. If not stated all repetitions will be plotted, each in a separate window. }
+  \item{rep}{ repetition of the neural network. If rep="best", the repetition with the smallest error will be plotted. If not stated all repetitions will be plotted, each in a separate window. }
   \item{x.entry}{ x-coordinate of the entry layer. Depends on the arrow.length in default. }
   \item{x.out}{ x-coordinate of the output layer. }
   \item{radius}{ radius of the neurons. }
   \item{arrow.length}{ length of the entry and out arrows. }
   \item{intercept}{ a logical value indicating whether to plot the intercept. }
   \item{intercept.factor}{ x-position factor of the intercept. The closer the factor is to 0, the closer the intercept is to its left neuron. }
-  \item{information}{ a logical value indicating whether to add the error, steps and threshold to the plot. }
+  \item{information}{ a logical value indicating whether to add the error and steps to the plot. }
   \item{information.pos}{ y-position of the information. }
   \item{col.entry.synapse}{ color of the synapses leading to the input neurons. }
   \item{col.entry}{  color of the input neurons. }
@@ -42,7 +42,7 @@
   \item{\dots}{ arguments to be passed to methods, such as graphical parameters (see \code{\link{par}}). }
 }
 
-\author{ Stefan Fritsch \email{fritsch@bips.uni-bremen.de} }
+\author{ Stefan Fritsch, Frauke Guenther \email{guenther@bips.uni-bremen.de} }
 
 \seealso{\code{\link{neuralnet}}}
 \examples{

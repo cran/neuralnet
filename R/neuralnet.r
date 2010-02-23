@@ -1,21 +1,23 @@
-`neuralnet` <-
+neuralnet <-
 function (formula, data, hidden = 1, threshold = 0.01, stepmax = 1e+05, 
     rep = 1, startweights = NULL, learningrate.limit = NULL, 
-    learningrate.factor = list(minus = 0.5, plus = 1.2), lifesign = "none", 
-    lifesign.step = 1000, algorithm = "rprop+", err.fct = "sse", 
-    act.fct = "logistic", linear.output = TRUE, exclude = NULL, 
-    constant.weights = NULL, likelihood = FALSE) 
+    learningrate.factor = list(minus = 0.5, plus = 1.2), learningrate = NULL, 
+    lifesign = "none", lifesign.step = 1000, algorithm = "rprop+", 
+    err.fct = "sse", act.fct = "logistic", linear.output = TRUE, 
+    exclude = NULL, constant.weights = NULL, likelihood = FALSE) 
 {
     call <- match.call()
     options(scipen = 100, digits = 10)
     result <- varify.variables(data, formula, startweights, learningrate.limit, 
-        learningrate.factor, lifesign, algorithm, threshold, 
-        lifesign.step, hidden, rep, stepmax, err.fct, act.fct)
+        learningrate.factor, learningrate, lifesign, algorithm, 
+        threshold, lifesign.step, hidden, rep, stepmax, err.fct, 
+        act.fct)
     data <- result$data
     formula <- result$formula
     startweights <- result$startweights
     learningrate.limit <- result$learningrate.limit
     learningrate.factor <- result$learningrate.factor
+    learningrate.bp <- result$learningrate.bp
     lifesign <- result$lifesign
     algorithm <- result$algorithm
     threshold <- result$threshold
@@ -48,7 +50,8 @@ function (formula, data, hidden = 1, threshold = 0.01, stepmax = 1e+05,
             err.fct = err.fct, err.deriv.fct = err.deriv.fct, 
             act.fct = act.fct, act.deriv.fct = act.deriv.fct, 
             rep = i, linear.output = linear.output, exclude = exclude, 
-            constant.weights = constant.weights, likelihood = likelihood)
+            constant.weights = constant.weights, likelihood = likelihood, 
+            learningrate.bp = learningrate.bp)
         if (!is.null(result$output.vector)) {
             list.result <- c(list.result, list(result))
             matrix <- cbind(matrix, result$output.vector)
@@ -75,10 +78,10 @@ function (formula, data, hidden = 1, threshold = 0.01, stepmax = 1e+05,
         data, list.result, linear.output, exclude)
     return(nn)
 }
-`varify.variables` <-
+varify.variables <-
 function (data, formula, startweights, learningrate.limit, learningrate.factor, 
-    lifesign, algorithm, threshold, lifesign.step, hidden, rep, 
-    stepmax, err.fct, act.fct) 
+    learningrate.bp, lifesign, algorithm, threshold, lifesign.step, 
+    hidden, rep, stepmax, err.fct, act.fct) 
 {
     if (is.null(data)) 
         stop("'data' is missing", call. = FALSE)
@@ -134,13 +137,17 @@ function (data, formula, startweights, learningrate.limit, learningrate.factor,
     algorithm <- as.character(algorithm)
     if (!((algorithm == "rprop+") || (algorithm == "rprop-") || 
         (algorithm == "slr") || (algorithm == "sag") || (algorithm == 
-        "ran"))) 
+        "backprop"))) 
         stop("'algorithm' is not known", call. = FALSE)
     if (is.null(threshold)) 
         threshold <- 0.01
     threshold <- as.numeric(threshold)
     if (is.na(threshold)) 
         stop("'threshold' must be a numeric value", call. = FALSE)
+    if (algorithm == "backprop") 
+        if (is.null(learningrate.bp) || !is.numeric(learningrate.bp)) 
+            stop("'learningrate' must be a numeric value, if the backpropagation algorithm is used", 
+                call. = FALSE)
     if (is.null(lifesign.step)) 
         lifesign.step <- 1000
     lifesign.step <- as.integer(lifesign.step)
@@ -184,11 +191,11 @@ function (data, formula, startweights, learningrate.limit, learningrate.factor,
         stop("'err.fct' is not known", call. = FALSE)
     return(list(data = data, formula = formula, startweights = startweights, 
         learningrate.limit = learningrate.limit, learningrate.factor = learningrate.factor, 
-        lifesign = lifesign, algorithm = algorithm, threshold = threshold, 
-        lifesign.step = lifesign.step, hidden = hidden, rep = rep, 
-        stepmax = stepmax, model.list = model.list))
+        learningrate.bp = learningrate.bp, lifesign = lifesign, 
+        algorithm = algorithm, threshold = threshold, lifesign.step = lifesign.step, 
+        hidden = hidden, rep = rep, stepmax = stepmax, model.list = model.list))
 }
-`generate.initial.variables` <-
+generate.initial.variables <-
 function (data, model.list, hidden, act.fct, err.fct, algorithm, 
     linear.output, formula) 
 {
@@ -265,7 +272,7 @@ function (data, model.list, hidden, act.fct, err.fct, algorithm,
     return(list(covariate = covariate, response = response, err.fct = err.fct, 
         err.deriv.fct = err.deriv.fct, act.fct = act.fct, act.deriv.fct = act.deriv.fct))
 }
-`differentiate` <-
+differentiate <-
 function (orig.fct, hessian = FALSE) 
 {
     body.fct <- deparse(body(orig.fct))
@@ -312,7 +319,7 @@ function (orig.fct, hessian = FALSE)
             derivative(1, 1), ", nrow(x), ncol(x))}")))
     return(derivative)
 }
-`display` <-
+display <-
 function (hidden, threshold, rep, i.rep, lifesign) 
 {
     text <- paste("    rep: %", nchar(rep) - nchar(i.rep), "s", 
@@ -325,12 +332,12 @@ function (hidden, threshold, rep, i.rep, lifesign)
             2 + max(nchar(threshold)) + 2 * nchar(rep) + 41
     return(lifesign)
 }
-`calculate.neuralnet` <-
+calculate.neuralnet <-
 function (data, model.list, hidden, stepmax, rep, threshold, 
     learningrate.limit, learningrate.factor, lifesign, covariate, 
     response, lifesign.step, startweights, algorithm, act.fct, 
     act.deriv.fct, err.fct, err.deriv.fct, linear.output, likelihood, 
-    exclude, constant.weights) 
+    exclude, constant.weights, learningrate.bp) 
 {
     time.start.local <- Sys.time()
     result <- generate.startweights(model.list, hidden, startweights, 
@@ -345,7 +352,7 @@ function (data, model.list, hidden, stepmax, rep, threshold,
         lifesign = lifesign, lifesign.step = lifesign.step, act.fct = act.fct, 
         act.deriv.fct = act.deriv.fct, err.fct = err.fct, err.deriv.fct = err.deriv.fct, 
         algorithm = algorithm, linear.output = linear.output, 
-        exclude = exclude)
+        exclude = exclude, learningrate.bp = learningrate.bp)
     startweights <- weights
     weights <- result$weights
     step <- result$step
@@ -416,7 +423,7 @@ function (data, model.list, hidden, stepmax, rep, threshold,
         startweights = startweights, net.result = result$net.result, 
         output.vector = output.vector))
 }
-`generate.startweights` <-
+generate.startweights <-
 function (model.list, hidden, startweights, rep, exclude, constant.weights) 
 {
     input.count <- length(model.list$variables)
@@ -501,11 +508,11 @@ function (model.list, hidden, startweights, rep, exclude, constant.weights)
     weights <- relist(vector, nrow.weights, ncol.weights)
     return(list(weights = weights, exclude = exclude))
 }
-`rprop` <-
+rprop <-
 function (weights, response, covariate, threshold, learningrate.limit, 
     learningrate.factor, stepmax, lifesign, lifesign.step, act.fct, 
     act.deriv.fct, err.fct, err.deriv.fct, algorithm, linear.output, 
-    exclude) 
+    exclude, learningrate.bp) 
 {
     step <- 1
     nchar.stepmax <- max(nchar(stepmax), 7)
@@ -560,6 +567,10 @@ function (weights, response, covariate, threshold, learningrate.limit,
             result <- plus(gradients, gradients.old, weights, 
                 nrow.weights, ncol.weights, learningrate, learningrate.factor, 
                 learningrate.limit, exclude)
+        else if (algorithm == "backprop") 
+            result <- backprop(gradients, weights, length.weights, 
+                nrow.weights, ncol.weights, learningrate.bp, 
+                exclude)
         else result <- minus(gradients, gradients.old, weights, 
             length.weights, nrow.weights, ncol.weights, learningrate, 
             learningrate.factor, learningrate.limit, algorithm, 
@@ -588,7 +599,7 @@ function (weights, response, covariate, threshold, learningrate.limit,
     return(list(weights = weights, step = as.integer(step), reached.threshold = reached.threshold, 
         net.result = result$net.result, neuron.deriv = result$neuron.deriv))
 }
-`compute.net` <-
+compute.net <-
 function (weights, length.weights, covariate, act.fct, act.deriv.fct, 
     output.act.fct, output.act.deriv.fct, special) 
 {
@@ -615,7 +626,7 @@ function (weights, length.weights, covariate, act.fct, act.deriv.fct,
             call. = FALSE)
     list(neurons = neurons, neuron.deriv = neuron.deriv, net.result = net.result)
 }
-`calculate.gradients` <-
+calculate.gradients <-
 function (weights, length.weights, neurons, neuron.deriv, err.deriv, 
     exclude, linear.output) 
 {
@@ -634,7 +645,7 @@ function (weights, length.weights, neurons, neuron.deriv, err.deriv,
         }
     gradients[-exclude]
 }
-`plus` <-
+plus <-
 function (gradients, gradients.old, weights, nrow.weights, ncol.weights, 
     learningrate, learningrate.factor, learningrate.limit, exclude) 
 {
@@ -668,7 +679,19 @@ function (gradients, gradients.old, weights, nrow.weights, ncol.weights,
     list(gradients.old = gradients.old, weights = relist(weights, 
         nrow.weights, ncol.weights), learningrate = learningrate)
 }
-`minus` <-
+backprop <-
+function (gradients, weights, length.weights, nrow.weights, ncol.weights, 
+    learningrate.bp, exclude) 
+{
+    weights <- unlist(weights)
+    if (!is.null(exclude)) 
+        weights[-exclude] <- weights[-exclude] - gradients * 
+            learningrate.bp
+    else weights <- weights - gradients * learningrate.bp
+    list(gradients.old = gradients, weights = relist(weights, 
+        nrow.weights, ncol.weights), learningrate = learningrate.bp)
+}
+minus <-
 function (gradients, gradients.old, weights, length.weights, 
     nrow.weights, ncol.weights, learningrate, learningrate.factor, 
     learningrate.limit, algorithm, exclude) 
@@ -705,7 +728,7 @@ function (gradients, gradients.old, weights, length.weights,
     list(gradients.old = gradients, weights = relist(weights, 
         nrow.weights, ncol.weights), learningrate = learningrate)
 }
-`calculate.generalized.weights` <-
+calculate.generalized.weights <-
 function (weights, neuron.deriv, net.result) 
 {
     for (w in 1:length(weights)) {
@@ -728,7 +751,7 @@ function (weights, neuron.deriv, net.result)
     }
     return(generalized.weights)
 }
-`generate.output` <-
+generate.output <-
 function (covariate, call, rep, threshold, matrix, startweights, 
     model.list, response, err.fct, act.fct, data, list.result, 
     linear.output, exclude) 
@@ -761,7 +784,7 @@ function (covariate, call, rep, threshold, matrix, startweights,
     }
     return(nn)
 }
-`generate.rownames` <-
+generate.rownames <-
 function (matrix, weights, model.list) 
 {
     rownames <- rownames(matrix)[rownames(matrix) != ""]
@@ -808,7 +831,7 @@ function (matrix, weights, model.list)
     colnames(matrix) <- 1:(ncol(matrix))
     return(matrix)
 }
-`relist` <-
+relist <-
 function (x, nrow, ncol) 
 {
     list.x <- NULL
@@ -819,17 +842,17 @@ function (x, nrow, ncol)
     }
     list.x
 }
-`remove.intercept` <-
+remove.intercept <-
 function (matrix) 
 {
     matrix(matrix[-1, ], ncol = ncol(matrix))
 }
-`type` <-
+type <-
 function (fct) 
 {
     attr(fct, "type")
 }
-`print.nn` <-
+print.nn <-
 function (x, ...) 
 {
     matrix <- x$result.matrix
@@ -842,12 +865,12 @@ function (x, ...)
             if (any(rownames(sorted.matrix) == "aic")) {
                 print(t(rbind(Error = sorted.matrix["error", 
                   ], AIC = sorted.matrix["aic", ], BIC = sorted.matrix["bic", 
-                  ], "Reached Threshold" = sorted.matrix["reached.threshold", 
+                  ], `Reached Threshold` = sorted.matrix["reached.threshold", 
                   ], Steps = sorted.matrix["steps", ])))
             }
             else {
                 print(t(rbind(Error = sorted.matrix["error", 
-                  ], "Reached Threshold" = sorted.matrix["reached.threshold", 
+                  ], `Reached Threshold` = sorted.matrix["reached.threshold", 
                   ], Steps = sorted.matrix["steps", ])))
             }
         }

@@ -1,4 +1,4 @@
-`prediction` <-
+prediction <-
 function (x, list.glm = NULL) 
 {
     nn <- x
@@ -15,7 +15,7 @@ function (x, list.glm = NULL)
     cat("Data Error:\t", data.error, ";\n", sep = "")
     predictions
 }
-`calculate.predictions` <-
+calculate.predictions <-
 function (covariate, data.result, list.glm, matrix, list.net.result, 
     model.list) 
 {
@@ -51,7 +51,7 @@ function (covariate, data.result, list.glm, matrix, list.net.result,
     }
     predictions
 }
-`calculate.data.result` <-
+calculate.data.result <-
 function (response, covariate, model.list) 
 {
     duplicated <- duplicated(covariate)

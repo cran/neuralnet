@@ -1,4 +1,4 @@
-`confidence.interval` <-
+confidence.interval <-
 function (x, alpha = 0.05) 
 {
     net <- x
@@ -48,7 +48,7 @@ function (x, alpha = 0.05)
             length(lower.ci), rep), call. = F)
     list(lower.ci = lower.ci, upper.ci = upper.ci, nic = nic)
 }
-`calculate.information.matrices` <-
+calculate.information.matrices <-
 function (covariate, response, weights, err.fct, act.fct, exclude, 
     linear.output) 
 {

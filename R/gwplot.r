@@ -1,4 +1,4 @@
-`gwplot` <-
+gwplot <-
 function (x, rep = NULL, max = NULL, min = NULL, file = NULL, 
     selected.covariate = 1, selected.response = 1, highlight = FALSE, 
     type = "p", col = "black", ...) 

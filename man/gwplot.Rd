@@ -19,7 +19,7 @@ gwplot(x, rep = NULL, max = NULL, min = NULL, file = NULL,
   \item{file}{ a character string naming the plot to write to. If not stated, the plot will not be saved. }
   \item{selected.covariate}{ either a string of the covariate's name or an integer of the ordered covariates, indicating the reference covariate in the generalized weights plot. Defaulting to the first covariate. }
   \item{selected.response}{ either a string of the response variable's name or an integer of the ordered response variables, indicating the reference response in the generalized weights plot. Defaulting to the first response variable. }
-  \item{highlight}{ a logical value, indicating whether to highlight (red color) the best repetition (smallest Error). Only reasonable if rep=NULL. Default is FALSE}
+  \item{highlight}{ a logical value, indicating whether to highlight (red color) the best repetition (smallest error). Only reasonable if rep=NULL. Default is FALSE}
   \item{type}{a character indicating the type of plotting; actually any of the types as in \code{\link{plot.default}}.  }
   \item{col}{ a color of the generalized weights.  }
   \item{\dots}{ Arguments to be passed to methods, such as graphical parameters (see \code{\link{par}}). }
@@ -30,7 +30,7 @@ gwplot(x, rep = NULL, max = NULL, min = NULL, file = NULL,
     \emph{Using Neural Nets for Interpretation of Nonlinear Models.}  
     Proceedings of the Statistical Computing Section, 244-249 
     San Francisco: American Statistical Society (eds.) }
-\author{ Stefan Fritsch \email{fritsch@bips.uni-bremen.de} }
+\author{ Stefan Fritsch, Frauke Guenther \email{guenther@bips.uni-bremen.de} }
 \seealso{\code{\link{neuralnet}}}
 \examples{
 data(infert, package="datasets")

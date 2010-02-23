@@ -5,22 +5,22 @@
 Training of neural networks
 }
 \description{
-Training of neural networks using the Resilient Backpropagation with (Riedmiller, 1994) or without weightbacktracking (Riedmiller, 1993) or the modified globally convergent version by Anastasiadis et. al. (2005). The package allows flexible settings through custom-choice of error- and activation-function. Furthermore the calculation of generalized weights (Intrator O & Intrator N, 1993) is implemented.
+Training of neural networks using the backpropagation, resilient backpropagation with (Riedmiller, 1994) or without weight backtracking (Riedmiller, 1993) or the modified globally convergent version by Anastasiadis et al. (2005). The package allows flexible settings through custom-choice of error and activation function. Furthermore, the calculation of generalized weights (Intrator O & Intrator N, 1993) is implemented.
 }
 \details{
 \tabular{ll}{
 Package: \tab neuralnet\cr
 Type: \tab Package\cr
-Version: \tab 1.2\cr
-Date: \tab 2008-08-10\cr
+Version: \tab 1.3\cr
+Date: \tab 2010-02-23\cr
 License: \tab GPL (>=2)
 }
 
 }
 \author{
-Stefan Fritsch \email{fritsch@bips.uni-bremen.de}, 
+Stefan Fritsch, 
 Frauke Guenther \email{guenther@bips.uni-bremen.de}, 
-following earlier work by Marc Suling \email{suling@bips.uni-bremen.de}
+following earlier work by Marc Suling
 
 Maintainer: Frauke Guenther \email{guenther@bips.uni-bremen.de}
 }

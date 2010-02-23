@@ -1,4 +1,4 @@
-`compute` <-
+compute <-
 function (x, covariate, rep = 1) 
 {
     nn <- x
