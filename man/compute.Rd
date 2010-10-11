@@ -26,7 +26,8 @@ compute(x, covariate, rep = 1)
 \examples{
 Var1 <- runif(50, 0, 100) 
 sqrt.data <- data.frame(Var1, Sqrt=sqrt(Var1))
-print(net.sqrt <- neuralnet( Sqrt~Var1,  sqrt.data, hidden=10, threshold=0.01))
+print(net.sqrt <- neuralnet(Sqrt~Var1,  sqrt.data, hidden=10, 
+                  threshold=0.01))
 compute(net.sqrt, (1:10)^2)$net.result
 }
 \keyword{ neural }

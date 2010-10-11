@@ -15,19 +15,27 @@
 The globally convergent algorithm is based on the resilient backpropagation without weight backtracking and additionally modifies one learning rate, either the learningrate associated with the smallest absolute gradient (sag) or the smallest learningrate (slr) itself. The learning rates in the grprop algorithm are limited to the boundaries defined in learningrate.limit. 
 }
 \usage{
-neuralnet(formula, data, hidden = 1, threshold = 0.01, stepmax = 1e+05, rep = 1, startweights = NULL, learningrate.limit = NULL, learningrate.factor = list(minus = 0.5, plus = 1.2), learningrate=NULL, lifesign = "none", lifesign.step = 1000, algorithm = "rprop+", err.fct = "sse", act.fct = "logistic", linear.output = TRUE, exclude = NULL, constant.weights = NULL, likelihood = FALSE)
+neuralnet(formula, data, hidden = 1, threshold = 0.01,        
+          stepmax = 1e+05, rep = 1, startweights = NULL, 
+          learningrate.limit = NULL, 
+          learningrate.factor = list(minus = 0.5, plus = 1.2), 
+          learningrate=NULL, lifesign = "none", 
+          lifesign.step = 1000, algorithm = "rprop+", 
+          err.fct = "sse", act.fct = "logistic", 
+          linear.output = TRUE, exclude = NULL, 
+          constant.weights = NULL, likelihood = FALSE)
 }
 \arguments{
   \item{formula}{ a symbolic description of the model to be fitted. }
   \item{data}{ a data frame containing the variables specified in \code{formula}.  }
   \item{hidden}{ a vector of integers specifying the number of hidden neurons (vertices) in each layer. }
-  \item{threshold}{ an integer specifying the threshold for the partial derivatives of the error function as stopping criteria.  }
+  \item{threshold}{ a numeric value specifying the threshold for the partial derivatives of the error function as stopping criteria.  }
   \item{stepmax}{ the maximum steps for the training of the neural network. Reaching this maximum leads to a stop of the neural network's training process. }
   \item{rep}{ the number of repetitions for the neural network's training. }
   \item{startweights}{ a vector containing starting values for the weights. The weights will not be randomly initialized.}
   \item{learningrate.limit}{ a vector or a list containing the lowest and highest limit for the learning rate. Used only for RPROP and GRPROP. }
   \item{learningrate.factor}{ a vector or a list containing the multiplication factors for the upper and lower learning rate. Used only for RPROP and GRPROP. }
-  \item{learningrate}{ an integer specifying the learning rate used by traditional backpropagation. Used only for traditional backpropagation. }
+  \item{learningrate}{ a numeric value specifying the learning rate used by traditional backpropagation. Used only for traditional backpropagation. }
   \item{lifesign}{ a string specifying how much the function will print during the calculation of the neural network. 'none', 'minimal' or 'full'. }
   \item{lifesign.step}{ an integer specifying the stepsize to print the minimal threshold in full lifesign mode.  }
   \item{algorithm}{ a string containing the algorithm type to calculate the neural network. The  following types are possible: 'backpropb', 'rprop+', 'rprop-', 'sag', or 'slr'. 'backprop' refers to backpropagation, 'rprop+' and 'rprop-' refer to  the resilient backpropagation with and without weight backtracking,
@@ -92,9 +100,11 @@ neuralnet(formula, data, hidden = 1, threshold = 0.01, stepmax = 1e+05, rep = 1,
 AND <- c(rep(0,7),1)
 OR <- c(0,rep(1,7))
 binary.data <- data.frame(expand.grid(c(0,1), c(0,1), c(0,1)), AND, OR)
-print(net <- neuralnet( AND+OR~Var1+Var2+Var3,  binary.data, hidden=0, rep=10, err.fct="ce", linear.output=FALSE))
+print(net <- neuralnet(AND+OR~Var1+Var2+Var3,  binary.data, hidden=0, 
+             rep=10, err.fct="ce", linear.output=FALSE))
 
 data(infert, package="datasets")
-print(net.infert <- neuralnet( case~parity+induced+spontaneous,  infert, err.fct="ce", linear.output=FALSE, likelihood=TRUE))
+print(net.infert <- neuralnet(case~parity+induced+spontaneous, infert, 
+                    err.fct="ce", linear.output=FALSE, likelihood=TRUE))
 }
 \keyword{ neural }

@@ -1,11 +1,10 @@
 Package: neuralnet
 Type: Package
 Title: Training of neural networks
-Version: 1.3
-Date: 2010-02-23
-Author: Stefan Fritsch <fritsch@bips.uni-bremen.de>, Frauke Guenther
-        <guenther@bips.uni-bremen.de>, following earlier work by Marc
-        Suling <suling@bips.uni-bremen.de>
+Version: 1.31
+Date: 2010-10-11
+Author: Stefan Fritsch, Frauke Guenther <guenther@bips.uni-bremen.de>,
+        following earlier work by Marc Suling
 Maintainer: Frauke Guenther <guenther@bips.uni-bremen.de>
 Depends: R (>= 2.9.0),grid, MASS
 Description: Training of neural networks using backpropagation,
@@ -17,6 +16,6 @@ Description: Training of neural networks using backpropagation,
         the calculation of generalized weights (Intrator O & Intrator
         N, 1993) is implemented.
 License: GPL (>= 2)
-Packaged: 2010-02-23 09:30:53 UTC; guenther
+Packaged: 2010-10-11 14:44:20 UTC; guenther
 Repository: CRAN
-Date/Publication: 2010-02-23 11:30:57
+Date/Publication: 2010-10-11 19:14:06

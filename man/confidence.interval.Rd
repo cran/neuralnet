@@ -36,7 +36,8 @@ the number of hidden units for an artificial neural network model.}
 \seealso{\code{\link{neuralnet}}}
 \examples{
     data(infert, package="datasets")
-    print(net.infert <- neuralnet( case~parity+induced+spontaneous,  infert, err.fct="ce", linear.output=FALSE))
+    print(net.infert <- neuralnet(case~parity+induced+spontaneous,  
+                        infert, err.fct="ce", linear.output=FALSE))
     confidence.interval(net.infert)
 }
 \keyword{ neural }
