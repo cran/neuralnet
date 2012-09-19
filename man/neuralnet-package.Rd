@@ -11,8 +11,8 @@ Training of neural networks using the backpropagation, resilient backpropagation
 \tabular{ll}{
 Package: \tab neuralnet\cr
 Type: \tab Package\cr
-Version: \tab 1.3\cr
-Date: \tab 2010-02-23\cr
+Version: \tab 1.32\cr
+Date: \tab 2012-09-19\cr
 License: \tab GPL (>=2)
 }
 

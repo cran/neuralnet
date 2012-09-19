@@ -38,7 +38,7 @@ neuralnet(formula, data, hidden = 1, threshold = 0.01,
   \item{learningrate}{ a numeric value specifying the learning rate used by traditional backpropagation. Used only for traditional backpropagation. }
   \item{lifesign}{ a string specifying how much the function will print during the calculation of the neural network. 'none', 'minimal' or 'full'. }
   \item{lifesign.step}{ an integer specifying the stepsize to print the minimal threshold in full lifesign mode.  }
-  \item{algorithm}{ a string containing the algorithm type to calculate the neural network. The  following types are possible: 'backpropb', 'rprop+', 'rprop-', 'sag', or 'slr'. 'backprop' refers to backpropagation, 'rprop+' and 'rprop-' refer to  the resilient backpropagation with and without weight backtracking,
+  \item{algorithm}{ a string containing the algorithm type to calculate the neural network. The  following types are possible: 'backprop', 'rprop+', 'rprop-', 'sag', or 'slr'. 'backprop' refers to backpropagation, 'rprop+' and 'rprop-' refer to  the resilient backpropagation with and without weight backtracking,
  while 'sag' and 'slr' induce the usage of the modified globally convergent algorithm (grprop). See Details for more information.}
   \item{err.fct}{ a differentiable function that is used for the calculation of the error. Alternatively, the strings 'sse' and 'ce' which stand for the sum of squared errors and the cross-entropy can be used.}
   \item{act.fct}{ a differentiable function that is used for smoothing the result of the cross product of the covariate or neurons and the weights. Additionally the strings, 'logistic' and 'tanh' are possible for the logistic function and tangent hyperbolicus. }

@@ -78,8 +78,6 @@ function (x, rep = NULL, x.entry = NULL, x.out = NULL, radius = 0.15,
             }
         }
         grid.newpage()
-        pushViewport(viewport(name = "plot.area", width = unit(dimension, 
-            "inches"), height = unit(dimension, "inches")))
         for (k in 1:length(weights)) {
             for (i in 1:neuron.count[k]) {
                 y.position[k] <- y.position[k] + y.step[k]
@@ -176,7 +174,6 @@ function (x, rep = NULL, x.entry = NULL, x.out = NULL, radius = 0.15,
                 "steps"], sep = ""), x = 0.5, y = information.pos, 
                 just = "bottom", gp = gpar(fontsize = fontsize + 
                   2, ...))
-        popViewport()
         if (!is.null(file)) {
             weight.plot <- recordPlot()
             save(weight.plot, file = file)
@@ -211,9 +208,8 @@ function (label, x, y, xy.null = c(0, 0), color, alignment = c("left",
         angle <- angle - 0
     if (is.numeric(label)) 
         label <- round(label, 5)
-    pushViewport(viewport(x = x.label, y = y.label, width = 0, 
-        height = , angle = angle, name = "vp1", just = alignment))
+    vp <- viewport(x = x.label, y = y.label, width = 0, height = , 
+        angle = angle, name = "vp1", just = alignment)
     grid.text(label, x = 0, y = unit(0.75, "mm"), just = alignment, 
-        gp = gpar(col = color, ...))
-    popViewport()
+        gp = gpar(col = color, ...), vp = vp)
 }

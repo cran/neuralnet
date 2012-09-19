@@ -1,0 +1,16 @@
+94beba630934582894eda37686303bc4 *DESCRIPTION
+ef5814dcb1b8960d75dcbc8c24f2736d *NAMESPACE
+55e46eab34b7114c68172fa990ec8f71 *R/compute.r
+f5977af246b8620e9a38d946275e6757 *R/confidence.interval.r
+0d4c5d382166f358683a360641a47abf *R/gwplot.r
+043720e8bd3e37cc498c7a088b818130 *R/neuralnet.r
+4e3e8ce4bdda528f4b207a9ad66be75b *R/plot.nn.r
+3cd843d8344c346082f987fc7a7103a0 *R/prediction.r
+d5e0ba4e1fd3f50a3af5648acaca1730 *man/compute.Rd
+fbb9b87ceaad2609b3072bf35d352d6f *man/confidence.interval.Rd
+550b805971661df7c5d2c7da0fc41ddc *man/gwplot.Rd
+6c49ad6dac4c2ef1674802b99c7cced4 *man/neuralnet-package.Rd
+ac0f2eade35579c26416ba98f4876340 *man/neuralnet.Rd
+d5b79cfcf355dbfe2ebe8aa19ae6639c *man/plot.nn.Rd
+56972ac8b3e3def094db3141bb74ca3d *man/prediction.Rd
+ad32ba150c8ea8ccea24cb27e123bdc8 *neuralnet.tar

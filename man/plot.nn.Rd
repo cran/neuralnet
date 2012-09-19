@@ -6,8 +6,7 @@
   for an inspection of the weights for objects of class \code{nn}, typically produced by \code{neuralnet}. 
 }
 \usage{
-    ## S3 method for class 'nn':
-    plot.nn(x, rep = NULL, x.entry = NULL, x.out = NULL,
+    \method{plot}{nn}(x, rep = NULL, x.entry = NULL, x.out = NULL,
         radius = 0.15, arrow.length = 0.2, intercept = TRUE, 
         intercept.factor = 0.4, information = TRUE,
         information.pos = 0.1, col.entry.synapse = "black",

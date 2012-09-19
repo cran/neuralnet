@@ -162,24 +162,24 @@ function (covariate, response, weights, err.fct, act.fct, exclude,
                 if (is.null(exclude) || all(i != exclude & j != 
                   exclude)) {
                   if (i <= length.betha) {
-                    temp <- which(betha.ind == i, arr.in = T)
+                    temp <- which(betha.ind == i, arr.ind = T)
                     r <- temp[1]
                     s <- temp[2]
                   }
                   else {
                     temp <- which(alpha.ind == (i - length.betha), 
-                      arr.in = T)
+                      arr.ind = T)
                     r <- temp[1]
                     s <- temp[2]
                   }
                   if (j <= length.betha) {
-                    temp <- which(betha.ind == j, arr.in = T)
+                    temp <- which(betha.ind == j, arr.ind = T)
                     u <- temp[1]
                     v <- temp[2]
                   }
                   else {
                     temp <- which(alpha.ind == (j - length.betha), 
-                      arr.in = T)
+                      arr.ind = T)
                     u <- temp[1]
                     v <- temp[2]
                   }
@@ -291,10 +291,10 @@ function (covariate, response, weights, err.fct, act.fct, exclude,
             for (j in 1:length.alpha) {
                 if (is.null(exclude) || all(i != exclude & j != 
                   exclude)) {
-                  r <- which(alpha.ind == i, arr.in = T)[1]
-                  s <- which(alpha.ind == i, arr.in = T)[2]
-                  u <- which(alpha.ind == j, arr.in = T)[1]
-                  v <- which(alpha.ind == j, arr.in = T)[2]
+                  r <- which(alpha.ind == i, arr.ind = T)[1]
+                  s <- which(alpha.ind == i, arr.ind = T)[2]
+                  u <- which(alpha.ind == j, arr.ind = T)[1]
+                  v <- which(alpha.ind == j, arr.ind = T)[2]
                   if (s == v) {
                     Hesse[i, j] <- sum(neuron.deriv2[[1]][, s] * 
                       err.deriv[, s] * neurons[[1]][, r] * neurons[[1]][, 
