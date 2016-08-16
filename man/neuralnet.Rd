@@ -83,7 +83,7 @@ neuralnet(formula, data, hidden = 1, threshold = 0.01,
     Proceedings of the Statistical Computing Section, 244-249 
     San Francisco: American Statistical Society (eds). 
 }
-\author{ Stefan Fritsch, Frauke Guenther \email{guenther@bips.uni-bremen.de} }
+\author{ Stefan Fritsch, Frauke Guenther \email{guenther@leibniz-bips.de} }
 
 \seealso{
  \code{\link{plot.nn}} for plotting the neural network.

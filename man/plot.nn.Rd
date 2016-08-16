@@ -41,7 +41,7 @@
   \item{\dots}{ arguments to be passed to methods, such as graphical parameters (see \code{\link{par}}). }
 }
 
-\author{ Stefan Fritsch, Frauke Guenther \email{guenther@bips.uni-bremen.de} }
+\author{ Stefan Fritsch, Frauke Guenther \email{guenther@leibniz-bips.de} }
 
 \seealso{\code{\link{neuralnet}}}
 \examples{

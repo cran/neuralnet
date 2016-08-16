@@ -1,3 +1,4 @@
+#' @export
 prediction <-
 function (x, list.glm = NULL) 
 {

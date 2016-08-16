@@ -1,21 +1,27 @@
 Package: neuralnet
 Type: Package
-Title: Training of neural networks
-Version: 1.32
-Date: 2012-09-19
-Author: Stefan Fritsch, Frauke Guenther <guenther@bips.uni-bremen.de>,
-        following earlier work by Marc Suling
-Maintainer: Frauke Guenther <guenther@bips.uni-bremen.de>
-Depends: R (>= 2.9.0),grid, MASS
+Title: Training of Neural Networks
+Version: 1.33
+Date: 2016-08-05
+Authors@R: c(
+    person(given="Stefan", family="Fritsch",  role="aut"), 
+    person(given="Frauke", family="Guenther", role=c("aut","cre"),email="guenther@leibniz-bips.de"),
+    person(given="Marc",   family="Suling",   role="ctb"),	
+    person(given="Sebastian M.", family="Mueller", email="smm@posteo.org", role = "ctb"))
+Author: Stefan Fritsch [aut], Frauke Guenther [aut, cre], Marc Suling [ctb], Sebastian M. Mueller [ctb]
+Maintainer: Frauke Guenther <guenther@leibniz-bips.de>
+Depends: R (>= 2.9.0)
+Imports: grid, MASS, grDevices, stats, utils
 Description: Training of neural networks using backpropagation,
-        resilient backpropagation with (Riedmiller, 1994) or without
-        weight backtracking (Riedmiller and Braun, 1993) or the
-        modified globally convergent version by Anastasiadis et al.
-        (2005). The package allows flexible settings through
-        custom-choice of error and activation function. Furthermore,
-        the calculation of generalized weights (Intrator O & Intrator
-        N, 1993) is implemented.
+    resilient backpropagation with (Riedmiller, 1994) or without
+    weight backtracking (Riedmiller and Braun, 1993) or the
+    modified globally convergent version by Anastasiadis et al.
+    (2005). The package allows flexible settings through
+    custom-choice of error and activation function. Furthermore,
+    the calculation of generalized weights (Intrator O & Intrator
+    N, 1993) is implemented.
 License: GPL (>= 2)
-Packaged: 2012-09-20 08:43:18 UTC; guenther
+NeedsCompilation: no
+Packaged: 2016-08-05 12:31:26 UTC; guenther
 Repository: CRAN
-Date/Publication: 2012-09-20 09:35:16
+Date/Publication: 2016-08-16 12:08:44

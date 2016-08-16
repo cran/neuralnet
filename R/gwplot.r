@@ -1,3 +1,4 @@
+#' @export
 gwplot <-
 function (x, rep = NULL, max = NULL, min = NULL, file = NULL, 
     selected.covariate = 1, selected.response = 1, highlight = FALSE, 
@@ -55,25 +56,25 @@ function (x, rep = NULL, max = NULL, min = NULL, file = NULL,
         min <- min(matrix)
     ylim <- c(min, max)
     if (!highlight || item.to.print != 1 || ncol(matrix) == 1) 
-        plot(x = covariate, y = matrix[, 1], ylim = ylim, xlab = variablename, 
+        graphics::plot(x = covariate, y = matrix[, 1], ylim = ylim, xlab = variablename, 
             ylab = "GW", type = type, col = col, ...)
-    else plot(x = covariate, y = matrix[, 2], ylim = ylim, xlab = variablename, 
+    else graphics::plot(x = covariate, y = matrix[, 2], ylim = ylim, xlab = variablename, 
         ylab = "GW", type = type, col = col, ...)
     if (ncol(matrix) >= 2) {
         for (i in 2:ncol(matrix)) if (!highlight || (i != item.to.print)) 
-            lines(x = covariate, y = matrix[, i], type = type, 
+          graphics::lines(x = covariate, y = matrix[, i], type = type, 
                 col = col, ...)
     }
     if (highlight) {
-        lines(x = covariate, y = matrix[, item.to.print], type = type, 
+      graphics::lines(x = covariate, y = matrix[, item.to.print], type = type, 
             col = "red", ...)
-        legend("topright", paste("Minimal Error: ", round(net$result.matrix["error", 
+      graphics::legend("topright", paste("Minimal Error: ", round(net$result.matrix["error", 
             item.to.print], 3), sep = ""), col = "red", ...)
     }
-    title(paste("Response: ", net$model.list$response[selected.response], 
+    graphics::title(paste("Response: ", net$model.list$response[selected.response], 
         sep = ""))
     if (!is.null(file)) {
-        weight.plot <- recordPlot()
+        weight.plot <- grDevices::recordPlot()
         save(weight.plot, file = file)
     }
 }

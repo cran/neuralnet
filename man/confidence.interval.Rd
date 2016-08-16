@@ -32,7 +32,7 @@ the number of hidden units for an artificial neural network model.}
     IEEE Transactions on Neural Networks 5 (6), pages 865-871
 }
 
-\author{ Stefan Fritsch, Frauke Guenther \email{guenther@bips.uni-bremen.de} }
+\author{ Stefan Fritsch, Frauke Guenther \email{guenther@leibniz-bips.de} }
 \seealso{\code{\link{neuralnet}}}
 \examples{
     data(infert, package="datasets")

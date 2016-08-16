@@ -1,3 +1,4 @@
+#' @export
 compute <-
 function (x, covariate, rep = 1) 
 {

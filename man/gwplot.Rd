@@ -30,7 +30,7 @@ gwplot(x, rep = NULL, max = NULL, min = NULL, file = NULL,
     \emph{Using Neural Nets for Interpretation of Nonlinear Models.}  
     Proceedings of the Statistical Computing Section, 244-249 
     San Francisco: American Statistical Society (eds.) }
-\author{ Stefan Fritsch, Frauke Guenther \email{guenther@bips.uni-bremen.de} }
+\author{ Stefan Fritsch, Frauke Guenther \email{guenther@leibniz-bips.de} }
 \seealso{\code{\link{neuralnet}}}
 \examples{
 data(infert, package="datasets")

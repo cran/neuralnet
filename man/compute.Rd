@@ -22,7 +22,7 @@ compute(x, covariate, rep = 1)
   \item{net.result}{a matrix containing the overall result of the neural network.}
 }
 
-\author{ Stefan Fritsch, Frauke Guenther \email{guenther@bips.uni-bremen.de} }
+\author{ Stefan Fritsch, Frauke Guenther \email{guenther@leibniz-bips.de} }
 \examples{
 Var1 <- runif(50, 0, 100) 
 sqrt.data <- data.frame(Var1, Sqrt=sqrt(Var1))

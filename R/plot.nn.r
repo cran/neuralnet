@@ -1,3 +1,4 @@
+#' @export
 plot.nn <-
 function (x, rep = NULL, x.entry = NULL, x.out = NULL, radius = 0.15, 
     arrow.length = 0.2, intercept = TRUE, intercept.factor = 0.4, 
@@ -17,7 +18,7 @@ function (x, rep = NULL, x.entry = NULL, x.out = NULL, radius = 0.15,
             if (!is.null(file)) 
                 file.rep <- paste(file, ".", i, sep = "")
             else file.rep <- NULL
-            dev.new()
+            grDevices::dev.new()
             plot.nn(net, rep = i, x.entry, x.out, radius, arrow.length, 
                 intercept, intercept.factor, information, information.pos, 
                 col.entry.synapse, col.entry, col.hidden, col.hidden.synapse, 
@@ -77,7 +78,7 @@ function (x, rep = NULL, x.entry = NULL, x.out = NULL, radius = 0.15,
                 out.label <- c(out.label, tmp)
             }
         }
-        grid.newpage()
+        grid::grid.newpage()
         for (k in 1:length(weights)) {
             for (i in 1:neuron.count[k]) {
                 y.position[k] <- y.position[k] + y.step[k]
@@ -89,8 +90,8 @@ function (x, rep = NULL, x.entry = NULL, x.out = NULL, radius = 0.15,
                     radius)
                   x <- c(x.position[k], x.position[k + 1] - result[1])
                   y <- c(y.position[k], y.tmp + result[2])
-                  grid.lines(x = x, y = y, arrow = arrow(length = unit(0.15, 
-                    "cm"), type = "closed"), gp = gpar(fill = col.hidden.synapse, 
+                  grid::grid.lines(x = x, y = y, arrow = grid::arrow(length = grid::unit(0.15, 
+                    "cm"), type = "closed"), gp = grid::gpar(fill = col.hidden.synapse, 
                     col = col.hidden.synapse, ...))
                   if (show.weights) 
                     draw.text(label = weights[[k]][neuron.count[k] - 
@@ -100,23 +101,23 @@ function (x, rep = NULL, x.entry = NULL, x.out = NULL, radius = 0.15,
                       fontsize = fontsize - 2, ...)
                 }
                 if (k == 1) {
-                  grid.lines(x = c((x.position[1] - arrow.length), 
+                  grid::grid.lines(x = c((x.position[1] - arrow.length), 
                     x.position[1] - radius), y = y.position[k], 
-                    arrow = arrow(length = unit(0.15, "cm"), 
-                      type = "closed"), gp = gpar(fill = col.entry.synapse, 
+                    arrow = grid::arrow(length = grid::unit(0.15, "cm"), 
+                      type = "closed"), gp = grid::gpar(fill = col.entry.synapse, 
                       col = col.entry.synapse, ...))
                   draw.text(label = entry.label[(neuron.count[1] + 
                     1) - i], x = c((x.position - arrow.length), 
                     x.position[1] - radius), y = c(y.position[k], 
                     y.position[k]), xy.null = c(0, 0), color = col.entry.synapse, 
                     fontsize = fontsize, ...)
-                  grid.circle(x = x.position[k], y = y.position[k], 
-                    r = radius, gp = gpar(fill = "white", col = col.entry, 
+                  grid::grid.circle(x = x.position[k], y = y.position[k], 
+                    r = radius, gp = grid::gpar(fill = "white", col = col.entry, 
                       ...))
                 }
                 else {
-                  grid.circle(x = x.position[k], y = y.position[k], 
-                    r = radius, gp = gpar(fill = "white", col = col.hidden, 
+                  grid::grid.circle(x = x.position[k], y = y.position[k], 
+                    r = radius, gp = grid::gpar(fill = "white", col = col.hidden, 
                       ...))
                 }
             }
@@ -124,17 +125,17 @@ function (x, rep = NULL, x.entry = NULL, x.out = NULL, radius = 0.15,
         out <- length(neuron.count)
         for (i in 1:neuron.count[out]) {
             y.position[out] <- y.position[out] + y.step[out]
-            grid.lines(x = c(x.position[out] + radius, x.position[out] + 
-                arrow.length), y = y.position[out], arrow = arrow(length = unit(0.15, 
-                "cm"), type = "closed"), gp = gpar(fill = col.out.synapse, 
+            grid::grid.lines(x = c(x.position[out] + radius, x.position[out] + 
+                arrow.length), y = y.position[out], arrow = grid::arrow(length = grid::unit(0.15, 
+                "cm"), type = "closed"), gp = grid::gpar(fill = col.out.synapse, 
                 col = col.out.synapse, ...))
             draw.text(label = out.label[(neuron.count[out] + 
                 1) - i], x = c((x.position[out] + radius), x.position[out] + 
                 arrow.length), y = c(y.position[out], y.position[out]), 
                 xy.null = c(0, 0), color = col.out.synapse, fontsize = fontsize, 
                 ...)
-            grid.circle(x = x.position[out], y = y.position[out], 
-                r = radius, gp = gpar(fill = "white", col = col.out, 
+            grid::grid.circle(x = x.position[out], y = y.position[out], 
+                r = radius, gp = grid::gpar(fill = "white", col = col.out, 
                   ...))
         }
         if (intercept) {
@@ -148,8 +149,8 @@ function (x, rep = NULL, x.entry = NULL, x.out = NULL, radius = 0.15,
                     1]), c(y.intercept, y.tmp), radius)
                   x <- c(x.intercept, x.position[k + 1] - result[1])
                   y <- c(y.intercept, y.tmp + result[2])
-                  grid.lines(x = x, y = y, arrow = arrow(length = unit(0.15, 
-                    "cm"), type = "closed"), gp = gpar(fill = col.intercept, 
+                  grid::grid.lines(x = x, y = y, arrow = grid::arrow(length = grid::unit(0.15, 
+                    "cm"), type = "closed"), gp = grid::gpar(fill = col.intercept, 
                     col = col.intercept, ...))
                   xy.null <- cbind(x.position[k + 1] - x.intercept - 
                     2 * result[1], -(y.tmp - y.intercept + 2 * 
@@ -161,21 +162,21 @@ function (x, rep = NULL, x.entry = NULL, x.out = NULL, radius = 0.15,
                       color = col.intercept, alignment = c("right", 
                         "bottom"), fontsize = fontsize - 2, ...)
                 }
-                grid.circle(x = x.intercept, y = y.intercept, 
-                  r = radius, gp = gpar(fill = "white", col = col.intercept, 
+                grid::grid.circle(x = x.intercept, y = y.intercept, 
+                  r = radius, gp = grid::gpar(fill = "white", col = col.intercept, 
                     ...))
-                grid.text(1, x = x.intercept, y = y.intercept, 
-                  gp = gpar(col = col.intercept, ...))
+                grid::grid.text(1, x = x.intercept, y = y.intercept, 
+                  gp = grid::gpar(col = col.intercept, ...))
             }
         }
         if (information) 
-            grid.text(paste("Error: ", round(result.matrix[rep, 
+          grid::grid.text(paste("Error: ", round(result.matrix[rep, 
                 "error"], 6), "   Steps: ", result.matrix[rep, 
                 "steps"], sep = ""), x = 0.5, y = information.pos, 
-                just = "bottom", gp = gpar(fontsize = fontsize + 
+                just = "bottom", gp = grid::gpar(fontsize = fontsize + 
                   2, ...))
         if (!is.null(file)) {
-            weight.plot <- recordPlot()
+            weight.plot <- grDevices::recordPlot()
             save(weight.plot, file = file)
         }
     }
@@ -208,8 +209,8 @@ function (label, x, y, xy.null = c(0, 0), color, alignment = c("left",
         angle <- angle - 0
     if (is.numeric(label)) 
         label <- round(label, 5)
-    vp <- viewport(x = x.label, y = y.label, width = 0, height = , 
+    vp <- grid::viewport(x = x.label, y = y.label, width = 0, height = , 
         angle = angle, name = "vp1", just = alignment)
-    grid.text(label, x = 0, y = unit(0.75, "mm"), just = alignment, 
-        gp = gpar(col = color, ...), vp = vp)
+    grid::grid.text(label, x = 0, y = grid::unit(0.75, "mm"), just = alignment, 
+        gp = grid::gpar(col = color, ...), vp = vp)
 }

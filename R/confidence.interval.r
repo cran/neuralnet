@@ -1,3 +1,4 @@
+#' @export
 confidence.interval <-
 function (x, alpha = 0.05) 
 {
@@ -31,10 +32,10 @@ function (x, alpha = 0.05)
                 weights.vector <- unlist(weights)
                 if (!is.null(exclude)) {
                   d <- rep(NA, length(weights.vector))
-                  d[-exclude] <- qnorm(1 - alpha/2) * sqrt(diag(result.nic$variance))/sqrt(nrow(covariate))
+                  d[-exclude] <- stats::qnorm(1 - alpha/2) * sqrt(diag(result.nic$variance))/sqrt(nrow(covariate))
                 }
                 else {
-                  d <- qnorm(1 - alpha/2) * sqrt(diag(result.nic$variance))/sqrt(nrow(covariate))
+                  d <- stats::qnorm(1 - alpha/2) * sqrt(diag(result.nic$variance))/sqrt(nrow(covariate))
                 }
                 lower.ci <- c(lower.ci, list(relist(weights.vector - 
                   d, nrow.weights, ncol.weights)))
@@ -326,7 +327,7 @@ function (covariate, response, weights, err.fct, act.fct, exclude,
         variance <- NULL
     }
     else {
-        A.inv <- ginv(A)
+        A.inv <- MASS::ginv(A)
         variance <- A.inv %*% B %*% A.inv
         trace <- sum(diag(B %*% A.inv))
     }

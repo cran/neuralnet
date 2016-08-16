@@ -1,3 +1,4 @@
+#' @export
 neuralnet <-
 function (formula, data, hidden = 1, threshold = 0.01, stepmax = 1e+05, 
     rep = 1, startweights = NULL, learningrate.limit = NULL, 
@@ -40,7 +41,7 @@ function (formula, data, hidden = 1, threshold = 0.01, stepmax = 1e+05,
         if (lifesign != "none") {
             lifesign <- display(hidden, threshold, rep, i, lifesign)
         }
-        flush.console()
+        utils::flush.console()
         result <- calculate.neuralnet(learningrate.limit = learningrate.limit, 
             learningrate.factor = learningrate.factor, covariate = covariate, 
             response = response, data = data, model.list = model.list, 
@@ -57,7 +58,7 @@ function (formula, data, hidden = 1, threshold = 0.01, stepmax = 1e+05,
             matrix <- cbind(matrix, result$output.vector)
         }
     }
-    flush.console()
+    utils::flush.console()
     if (!is.null(matrix)) {
         weight.count <- length(unlist(list.result[[1]]$weights)) - 
             length(exclude) + length(constant.weights) - sum(constant.weights == 
@@ -78,6 +79,7 @@ function (formula, data, hidden = 1, threshold = 0.01, stepmax = 1e+05,
         data, list.result, linear.output, exclude)
     return(nn)
 }
+
 varify.variables <-
 function (data, formula, startweights, learningrate.limit, learningrate.factor, 
     learningrate.bp, lifesign, algorithm, threshold, lifesign.step, 
@@ -93,11 +95,11 @@ function (data, formula, startweights, learningrate.limit, learningrate.factor,
             startweights <- startweights[!is.na(startweights)]
     }
     data <- as.data.frame(data)
-    formula <- as.formula(formula)
-    model.vars <- attr(terms(formula), "term.labels")
+    formula <- stats::as.formula(formula)
+    model.vars <- attr(stats::terms(formula), "term.labels")
     formula.reverse <- formula
     formula.reverse[[3]] <- formula[[2]]
-    model.resp <- attr(terms(formula.reverse), "term.labels")
+    model.resp <- attr(stats::terms(formula.reverse), "term.labels")
     model.list <- list(response = model.resp, variables = model.vars)
     if (!is.null(learningrate.limit)) {
         if (length(learningrate.limit) != 2) 
@@ -195,17 +197,18 @@ function (data, formula, startweights, learningrate.limit, learningrate.factor,
         algorithm = algorithm, threshold = threshold, lifesign.step = lifesign.step, 
         hidden = hidden, rep = rep, stepmax = stepmax, model.list = model.list))
 }
+
 generate.initial.variables <-
 function (data, model.list, hidden, act.fct, err.fct, algorithm, 
     linear.output, formula) 
 {
     formula.reverse <- formula
-    formula.reverse[[2]] <- as.formula(paste(model.list$response[[1]], 
+    formula.reverse[[2]] <- stats::as.formula(paste(model.list$response[[1]], 
         "~", model.list$variables[[1]], sep = ""))[[2]]
     formula.reverse[[3]] <- formula[[2]]
-    response <- as.matrix(model.frame(formula.reverse, data))
+    response <- as.matrix(stats::model.frame(formula.reverse, data))
     formula.reverse[[3]] <- formula[[3]]
-    covariate <- as.matrix(model.frame(formula.reverse, data))
+    covariate <- as.matrix(stats::model.frame(formula.reverse, data))
     covariate[, 1] <- 1
     colnames(covariate)[1] <- "intercept"
     if (is.function(act.fct)) {
@@ -280,7 +283,7 @@ function (orig.fct, hessian = FALSE)
         body.fct <- body.fct[2]
     text <- paste("y~", body.fct, sep = "")
     text2 <- paste(deparse(orig.fct)[1], "{}")
-    temp <- deriv(eval(parse(text = text)), "x", func = eval(parse(text = text2)), 
+    temp <- stats::deriv(eval(parse(text = text)), "x", func = eval(parse(text = text2)), 
         hessian = hessian)
     temp <- deparse(temp)
     derivative <- NULL
@@ -488,14 +491,14 @@ function (model.list, hidden, startweights, rep, exclude, constant.weights)
     if (!is.null(exclude)) {
         if (is.null(startweights) || length(startweights) < (length * 
             rep)) 
-            vector[-exclude] <- rnorm(length)
+            vector[-exclude] <- stats::rnorm(length)
         else vector[-exclude] <- startweights[((rep - 1) * length + 
             1):(length * rep)]
     }
     else {
         if (is.null(startweights) || length(startweights) < (length * 
             rep)) 
-            vector <- rnorm(length)
+            vector <- stats::rnorm(length)
         else vector <- startweights[((rep - 1) * length + 1):(length * 
             rep)]
     }
@@ -561,7 +564,7 @@ function (weights, response, covariate, threshold, learningrate.limit,
             cat(sprintf(eval(expression(text)), step), "\tmin thresh: ", 
                 min.reached.threshold, "\n", rep(" ", lifesign), 
                 sep = "")
-            flush.console()
+            utils::flush.console()
         }
         if (algorithm == "rprop+") 
             result <- plus(gradients, gradients.old, weights, 
