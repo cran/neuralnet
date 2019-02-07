@@ -1,17 +1,16 @@
 Package: neuralnet
 Type: Package
 Title: Training of Neural Networks
-Version: 1.33
-Date: 2016-08-05
+Version: 1.44.2
+Date: 2019-02-07
 Authors@R: c(
-    person(given="Stefan", family="Fritsch",  role="aut"), 
-    person(given="Frauke", family="Guenther", role=c("aut","cre"),email="guenther@leibniz-bips.de"),
-    person(given="Marc",   family="Suling",   role="ctb"),	
-    person(given="Sebastian M.", family="Mueller", email="smm@posteo.org", role = "ctb"))
-Author: Stefan Fritsch [aut], Frauke Guenther [aut, cre], Marc Suling [ctb], Sebastian M. Mueller [ctb]
-Maintainer: Frauke Guenther <guenther@leibniz-bips.de>
+    person(given="Stefan", family="Fritsch", role="aut"), 
+    person(given="Frauke", family="Guenther", role=c("aut")),
+    person(given="Marvin N.", family="Wright", role=c("aut","cre"),email="wright@leibniz-bips.de"),
+    person(given="Marc", family="Suling", role="ctb"),	
+    person(given="Sebastian M.", family="Mueller", role = "ctb"))
 Depends: R (>= 2.9.0)
-Imports: grid, MASS, grDevices, stats, utils
+Imports: grid, MASS, grDevices, stats, utils, Deriv
 Description: Training of neural networks using backpropagation,
     resilient backpropagation with (Riedmiller, 1994) or without
     weight backtracking (Riedmiller and Braun, 1993) or the
@@ -21,7 +20,17 @@ Description: Training of neural networks using backpropagation,
     the calculation of generalized weights (Intrator O & Intrator
     N, 1993) is implemented.
 License: GPL (>= 2)
+Suggests: testthat
+URL: https://github.com/bips-hb/neuralnet
+BugReports: https://github.com/bips-hb/neuralnet/issues
+RoxygenNote: 6.1.0
 NeedsCompilation: no
-Packaged: 2016-08-05 12:31:26 UTC; guenther
+Packaged: 2019-02-07 21:47:31 UTC; wright
+Author: Stefan Fritsch [aut],
+  Frauke Guenther [aut],
+  Marvin N. Wright [aut, cre],
+  Marc Suling [ctb],
+  Sebastian M. Mueller [ctb]
+Maintainer: Marvin N. Wright <wright@leibniz-bips.de>
 Repository: CRAN
-Date/Publication: 2016-08-16 12:08:44
+Date/Publication: 2019-02-07 22:20:07 UTC

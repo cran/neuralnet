@@ -1,29 +1,27 @@
+
+#' Deprecated function
+#' 
+#' The function \code{compute} is deprecated. Please refer to the new function \code{\link{predict.nn}}.
+#' 
+#' @param x an object of class \code{nn}.
+#' @param covariate a dataframe or matrix containing the variables that had
+#' been used to train the neural network.
+#' @param rep an integer indicating the neural network's repetition which
+#' should be used.
+#' @return \code{compute} returns a list containing the following components:
+#' \item{neurons}{a list of the neurons' output for each layer of the neural
+#' network.} \item{net.result}{a matrix containing the overall result of the
+#' neural network.}
+#' 
 #' @export
-compute <-
-function (x, covariate, rep = 1) 
-{
-    nn <- x
-    linear.output <- nn$linear.output
-    weights <- nn$weights[[rep]]
-    nrow.weights <- sapply(weights, nrow)
-    ncol.weights <- sapply(weights, ncol)
-    weights <- unlist(weights)
-    if (any(is.na(weights))) 
-        weights[is.na(weights)] <- 0
-    weights <- relist(weights, nrow.weights, ncol.weights)
-    length.weights <- length(weights)
-    covariate <- as.matrix(cbind(1, covariate))
-    act.fct <- nn$act.fct
-    neurons <- list(covariate)
-    if (length.weights > 1) 
-        for (i in 1:(length.weights - 1)) {
-            temp <- neurons[[i]] %*% weights[[i]]
-            act.temp <- act.fct(temp)
-            neurons[[i + 1]] <- cbind(1, act.temp)
-        }
-    temp <- neurons[[length.weights]] %*% weights[[length.weights]]
-    if (linear.output) 
-        net.result <- temp
-    else net.result <- act.fct(temp)
-    list(neurons = neurons, net.result = net.result)
+compute <- function(x, covariate, rep = 1) {
+  #.Deprecated("predict", package = "neuralnet")
+  pred <- predict.nn(x, newdata = covariate, rep = rep, all.units = TRUE)
+  
+  # Create old format by adding intercept
+  for (i in 1:(length(pred) - 1)) {
+    pred[[i]] <- cbind(1, pred[[i]])
+  }
+  
+  list(neurons = pred[-length(pred)], net.result = pred[[length(pred)]])
 }
